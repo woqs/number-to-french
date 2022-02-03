@@ -70,7 +70,7 @@ class HundredsSerializer extends AbstractSerializer
         }
         if ($hundreds->getBase() !== "0" || $isOddNumber) {
             $serializedString = self::addPrefixDash($serializedString);
-            if ($hundreds->getDecimal() !== "0" && $hundreds->getDecimal() !== "1" && $hundreds->getBase() === "1") {
+            if ($hundreds->getDecimal() !== "0" && $hundreds->getDecimal() !== "1" && $hundreds->getDecimal() !== "9" && $hundreds->getBase() === "1") {
                 $serializedString .= 'et-';
             }
             if ($isOddNumber) {

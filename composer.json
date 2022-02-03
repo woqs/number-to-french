@@ -1,5 +1,12 @@
 {
     "autoload": {
-        "psr-4": {"NumberToFrench\\": "src/"}
+        "psr-4": {
+            "NumberToFrench\\": "src/",
+            "NumberToFrench\\Test\\": "test/"
+        }
+    },
+    "require": {
+        "php": ">=7.1.3",
+        "phpunit/phpunit": "^7.5"
     }
 }
