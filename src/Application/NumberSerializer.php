@@ -4,7 +4,7 @@ namespace NumberToFrench\Application;
 
 use NumberToFrench\Domain\Number;
 
-class NumberSerializer
+class NumberSerializer extends AbstractSerializer
 {
     public static function serialize(Number $number): string
     {
@@ -16,11 +16,29 @@ class NumberSerializer
             // code...
         };
         if ($number->getThousand() !== null) {
-            // code...
+            $serializedString = self::addPrefixDash($serializedString);
+            $serializedString .= HundredsSerializer::serialize($number->getThousand());
+            if ($serializedString === "un") {
+                $serializedString = "";
+            }
+            $serializedString = self::addPrefixDash($serializedString);
+            $serializedString .= "mille";
         };
         if ($number->getBase() !== null) {
-            $serializedString .= HundredsSerializer::serialize($number->getBase());
+            if ($number->getBase()->getBase() === "0" &&
+                $number->getBase()->getDecimal() === "0" &&
+                $number->getBase()->getHundred() === "0"
+            ) {
+                // break
+            } else {
+                $serializedString = self::addPrefixDash($serializedString);
+                $serializedString .= HundredsSerializer::serialize($number->getBase());
+            }
         };
+
+        if ($serializedString === '') {
+            $serializedString = "zéro";
+        }
 
         return $serializedString;
     }

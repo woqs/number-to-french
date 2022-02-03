@@ -4,7 +4,7 @@ namespace NumberToFrench\Application;
 
 use NumberToFrench\Domain\Hundreds;
 
-class HundredsSerializer
+class HundredsSerializer extends AbstractSerializer
 {
     private const FIGURE_SERIALIZED = [
         '1' => 'un',
@@ -18,8 +18,20 @@ class HundredsSerializer
         '9' => 'neuf',
     ];
 
+    private const ODD_SERIALIZED = [
+        '0' => 'dix',
+        '1' => 'onze',
+        '2' => 'douze',
+        '3' => 'treize',
+        '4' => 'quatorze',
+        '5' => 'quinze',
+        '6' => 'seize',
+        '7' => 'dix-sept',
+        '8' => 'dix-huit',
+        '9' => 'dix-neuf',
+    ];
+
     private const DECIMAL_SERIALIZED = [
-        '1' => 'dix',
         '2' => 'vingt',
         '3' => 'trente',
         '4' => 'quarante',
@@ -33,7 +45,7 @@ class HundredsSerializer
     public static function serialize(Hundreds $hundreds)
     {
         $serializedString = '';
-        $isOneOnDecimal = false;
+        $isOddNumber = false;
 
         if ($hundreds->getHundred() !== "0") {
             if ($hundreds->getHundred() === "1") {
@@ -43,20 +55,29 @@ class HundredsSerializer
             }
         }
         if ($hundreds->getDecimal() !== "0") {
-            if ($serializedString !== '') {
-                $serializedString .= '-';
-            }
-            if ($hundreds->getDecimal() === "1") {
-                $isOneOnDecimal = true;
-            } else {
-                $serializedString .= self::DECIMAL_SERIALIZED[$hundreds->getDecimal()];
+            switch ($hundreds->getDecimal()) {
+                case "1":
+                    $isOddNumber = true;
+                    break;
+                case "7":
+                case "9":
+                    $isOddNumber = true;
+                default:
+                    $serializedString = self::addPrefixDash($serializedString);
+                    $serializedString .= self::DECIMAL_SERIALIZED[$hundreds->getDecimal()];
+                    break;
             }
         }
-        if ($hundreds->getBase() !== "0") {
-            if ($serializedString !== '') {
-                $serializedString .= '-';
+        if ($hundreds->getBase() !== "0" || $isOddNumber) {
+            $serializedString = self::addPrefixDash($serializedString);
+            if ($hundreds->getDecimal() !== "0" && $hundreds->getDecimal() !== "1" && $hundreds->getBase() === "1") {
+                $serializedString .= 'et-';
             }
-            $serializedString .= self::FIGURE_SERIALIZED[$hundreds->getBase()];
+            if ($isOddNumber) {
+                $serializedString .= self::ODD_SERIALIZED[$hundreds->getBase()];
+            } else {
+                $serializedString .= self::FIGURE_SERIALIZED[$hundreds->getBase()];
+            }
         }
 
         return $serializedString;
