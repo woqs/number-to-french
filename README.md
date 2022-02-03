@@ -2,16 +2,22 @@
 
 Translate from an array of int to a french translated string
 
-## Usage
+## Requirements
 
-First install the dependencies with `make install`
+* php 8.1
 
-You can then launch the project with `make launch`
+## Local Usage
 
-You can launch the tests with `make launch-test`
+`make install` : install the dependencies
+
+`make launch` : launch the project
+
+`make launch-test` : launch the tests
 
 ## Dockerized Usage
 
-You can launch the project with `make dk-launch` in a dockerized env
+`make dk-install` : install the dependencies
 
-You can launch the tests with `make launch-test` in a dockerized env
+`make dk-launch` : launch the project
+
+`make dk-launch-test` : launch the tests
