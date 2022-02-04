@@ -24,6 +24,8 @@ class FromNumberToFrenchStringHandlerTest extends \PHPUnit\Framework\TestCase
 			[71, "soixante-et-onze"],
 			[91, "quatre-vingt-onze"],
 			[100000000000, "cent-milliards"],
+			[101000000, "cent-un-millions"],
+			[81, "quatre-vingt-un"],
 		];
 	}
 }

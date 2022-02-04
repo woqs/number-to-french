@@ -18,3 +18,9 @@ dk-launch:
 
 dk-launch-test:
 	docker container run --rm -v $$(pwd):/app/ php:8.1.2-cli php /app/vendor/phpunit/phpunit/phpunit /app/test/
+
+fun-launch:
+	php runFun.php
+
+dk-fun-launch:
+	docker container run --rm -v $$(pwd):/app/ php:8.1.2-cli php /app/runFun.php

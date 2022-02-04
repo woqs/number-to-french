@@ -1,12 +1,18 @@
 # Number To French Converter
 
-Translate from an array of int to a french translated string
+Translate from an array of int to an array of french translated strings, can go to billions
 
-## Requirements
+The array of integers is stored in the `inputValues.php` file
+
+Output is printed in the console
+
+## Prod
+
+### Requirements
 
 * php 8.1
 
-## Local Usage
+### Local Usage
 
 `make install` : install the dependencies
 
@@ -14,10 +20,16 @@ Translate from an array of int to a french translated string
 
 `make launch-test` : launch the tests
 
-## Dockerized Usage
+### Dockerized Usage
 
 `make dk-install` : install the dependencies
 
 `make dk-launch` : launch the project
 
 `make dk-launch-test` : launch the tests
+
+## Fun
+
+`make fun-launch` : launch the "fun" project
+
+`make dk-fun-launch` : launch the "fun" project in a dockerized environment
