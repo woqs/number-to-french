@@ -42,7 +42,7 @@ class HundredsSerializer extends AbstractSerializer
         '9' => 'quatre-vingt',
     ];
 
-    public static function serialize(Hundreds $hundreds)
+    public static function serialize(Hundreds $hundreds, bool $isLastElement = false)
     {
         $serializedString = '';
         $isOddNumber = false;
@@ -83,6 +83,10 @@ class HundredsSerializer extends AbstractSerializer
             } else {
                 $serializedString .= self::FIGURE_SERIALIZED[$hundreds->getBase()];
             }
+        } elseif ($isLastElement && $hundreds->getBase() === "0" && $hundreds->getDecimal() === "8" ||
+            $isLastElement && $hundreds->getBase() === "0" && $hundreds->getDecimal() === "0" && $hundreds->getHundred() !== "1"
+        ) {
+            $serializedString .= "s";
         }
 
         return $serializedString;

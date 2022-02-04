@@ -40,7 +40,8 @@ const DECIMAL_SERIALIZED = [
 ];
 
 
-function dealWithGroupOfThreeish($groupOfThreeish, $isThousands = false) {
+function dealWithGroupOfThreeish($groupOfThreeish, $isThousands = false, $isLast = false) {
+    $baseGroupOfThreeish = $groupOfThreeish;
     $previousContent = false;
     $isDoubleZeroStart = substr($groupOfThreeish, 0, 2) === "00";
     if ($isThousands && $groupOfThreeish === "1") return false;
@@ -87,6 +88,14 @@ function dealWithGroupOfThreeish($groupOfThreeish, $isThousands = false) {
         $previousContent = $groupOfThreeish[0];
         $groupOfThreeish = substr($groupOfThreeish, 1);
     }
+
+    if ($isLast && (
+            substr($baseGroupOfThreeish, -2) === "80" ||
+            (substr($baseGroupOfThreeish, -2) === "00" && $baseGroupOfThreeish !== "100" && $baseGroupOfThreeish !== "000")
+        )
+    ) {
+        echo "s";
+    }
 }
 
 
@@ -101,7 +110,8 @@ foreach ($inputValues as $integerToTranslate) {
                     break;
                 }
                 if (count($matches) > 2 && $groupOfThreeish !== "000") echo "-";
-                dealWithGroupOfThreeish($groupOfThreeish);
+                dealWithGroupOfThreeish($groupOfThreeish, false, true);
+                if ($groupOfThreeish === "000" && $matches[$i+1] !== "1") echo "s";
                 break;
             case 2:
                 dealWithGroupOfThreeish($groupOfThreeish, true);

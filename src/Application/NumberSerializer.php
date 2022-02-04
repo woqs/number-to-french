@@ -50,6 +50,9 @@ class NumberSerializer extends AbstractSerializer
                 }
                 $serializedString = self::addPrefixDash($serializedString);
                 $serializedString .= "mille";
+                if(self::shouldPass($number->getBase()) && $serializedString !== "mille") {
+                    $serializedString .= "s";
+                }
             }
         }
         if ($number->getBase() !== null) {
@@ -57,7 +60,7 @@ class NumberSerializer extends AbstractSerializer
                 // break
             } else {
                 $serializedString = self::addPrefixDash($serializedString);
-                $serializedString .= HundredsSerializer::serialize($number->getBase());
+                $serializedString .= HundredsSerializer::serialize($number->getBase(), true);
             }
         }
 
